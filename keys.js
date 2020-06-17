@@ -1,6 +1,6 @@
 //OMDB API Key 10946191
 
-console.log('this is loaded');
+console.log('Success...this is loaded...now check it out');
 
 exports.spotify = {
   id: process.env.SPOTIFY_ID,

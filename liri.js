@@ -44,7 +44,7 @@ switch (command) {
       break;
   
     case "do-what-it-says":
-      doWhatItSays(search);
+      doThis(search);
       break;
     default:
         console.log("Invalid Command");
@@ -65,7 +65,8 @@ console.log(`\n - - - - -\n`);
             if (userBand.length > 0) {
                 for (i = 0; i < 1; i++) {
 
-                    console.log(`\nArtist: ${userBand[i].lineup[0]} \nVenue: ${userBand[i].venue.name}\nVenue Location: ${userBand[i].venue.latitude},${userBand[i].venue.longitude}\nVenue City: ${userBand[i].venue.city}, ${userBand[i].venue.country}`)
+                    console.log(`\nArtist: ${userBand[i].lineup[0]} \nVenue: ${userBand[i].venue.name}\nVenue Location: ${userBand[i].venue.latitude},
+                    ${userBand[i].venue.longitude}\nVenue City: ${userBand[i].venue.city}, ${userBand[i].venue.country}`)
 
                     // Moment date format MM/DD/YYYY
                     var concertDate = moment(userBand[i].datetime).format("MM/DD/YYYY hh:00 A");
@@ -79,34 +80,58 @@ console.log(`\n - - - - -\n`);
       )};
 
 
-// function spotifyThisSong(){
-//     //spotify search format
-//     spotify.search({ type: 'track', query: command, limit: 1}, function(error, data) {
-//         if(error) {
-//             return console.log('Song not found');
-//         }
-//         var spotArr = data.tracks.items;
+function spotifyThis(){
+    //spotify search format
+    console.log(`\n - - - - -`);
 
-//         for (var i = 0; i < spotArr.length; i++){
-//             console.log('\nArtist: ${dat')
-//         }
-//     })
-// }
+    // If command is not found, 99 Problems will be passed
+    // if (!command) {
+    //     command = "99 Problems"
+    // };
 
-// function doWhatItSays(){
-//     fs.readFile("random.txt", "uft8", function (error, data){
-//         if(error){ return console.log(error) }
+    // search format
+    spotify.search({
+        type: 'track',
+        query: command,
+        limit: 1
+    }, function (error, data) {
+        if (error) {
+            return console.log('Error occurred: ' + error);
+        }
+        //data formatted in an array
+        var spotifyArr = data.tracks.items;
 
-//         let dataArray = data.split(",");
+        for (i = 0; i < spotifyArr.length; i++) {
+            console.log(`\nArtist: ${data.tracks.items[i].album.artists[0].name} \nSong: ${data.tracks.items[i].name}\nAlbum: ${data.tracks.items[i].album.name}\nSpotify link: ${data.tracks.items[i].external_urls.spotify}\n\n - - - - -`)
+        };
+    });
+}
 
-//         command = dataArray[0];
-//         search = dataArray[1];
+function movieThis() {
+    // if (!userQuery) {
+    //     userQuery = "mr nobody";
+    // };
+    // OMDB api request
+    request("http://www.omdbapi.com/?t=" + search + "&apikey=10946191", function (error, response, body) {
+        var userMovie = JSON.parse(body);
 
-//         dataCommand(command, search);
-//     })
-//}
+        // BECAUSE THE ROTTEN TOMATOES RATING WAS NESTED IT WAS NECESSARY TO CAPTURE ITS VALUES IN AN ARRAY TO CREATE A PATH
+        var ratingsArr = userMovie.Ratings;
+        if (ratingsArr.length > 2) {}
 
-function doWhatItSays() {
+        if (!error && response.statusCode === 200) {
+            console.log(`\nTitle: ${userMovie.Title}\nCast: ${userMovie.Actors}\nReleased: ${userMovie.Year}\nIMDb Rating: 
+            ${userMovie.imdbRating}\nRotten Tomatoes Rating: ${userMovie.Ratings[1].Value}\nCountry: 
+            ${userMovie.Country}\nLanguage: ${userMovie.Language}\nPlot: ${userMovie.Plot}\n\n- - - - -`)
+
+
+        } else {
+            return console.log("Movie able to be found. Error:" + error)
+        };
+    })
+};
+
+function doThis() {
     //File system to read txt file
     fs.readFile("random.txt", "utf8", function (error, data) {
         if (error) {
