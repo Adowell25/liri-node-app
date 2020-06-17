@@ -61,14 +61,13 @@ console.log(`\n - - - - -\n`);
             // data in JSON format
             if (!error && response.statusCode === 200) {
             var userBand = JSON.parse(body);
-            // PARSE DATA AND USE FOR LOOP TO ACCESS PATHS TO DATA
+            // Parse and loop the data
             if (userBand.length > 0) {
                 for (i = 0; i < 1; i++) {
 
-                    // CONSOLE DESIRED DATA USING E6 SYNTAX
                     console.log(`\nArtist: ${userBand[i].lineup[0]} \nVenue: ${userBand[i].venue.name}\nVenue Location: ${userBand[i].venue.latitude},${userBand[i].venue.longitude}\nVenue City: ${userBand[i].venue.city}, ${userBand[i].venue.country}`)
 
-                    // MOMENT.JS TO FORMAT THE DATE MM/DD/YYYY
+                    // Moment date format MM/DD/YYYY
                     var concertDate = moment(userBand[i].datetime).format("MM/DD/YYYY hh:00 A");
                     console.log(`Date and Time: ${concertDate}\n\n- - - - -`);
                 };
@@ -108,18 +107,18 @@ console.log(`\n - - - - -\n`);
 //}
 
 function doWhatItSays() {
-    // UTILIZE THE BUILT IN READFILE METHOD TO ACCESS RANDOM.TXT
+    //File system to read txt file
     fs.readFile("random.txt", "utf8", function (error, data) {
         if (error) {
             return console.log(error);
         }
-        // CATCH DATA AND USE THE .SPLIT() METHOD TO SEPARATE OBJECTS WITHIN OUR NEW ARRAY
+        // New data array, using split to separate the objects
         var dataArr = data.split(",");
 
-        // TAKE OBJECTS FROM RANDOM.TXT TO PASS AS PARAMETERS
+        // Passing txt from the txt file as a parameter
         command = dataArr[0];
         search = dataArr[1];
-        // CALL OUR FUNCTION WITH OUR NEW PARAMETERS...
+        //Calling switch function
         dataCommand(command, search);
     });
 };
