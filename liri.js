@@ -88,7 +88,6 @@ function spotifyThis(){
         query: search,
         limit: 1
     }, function (error, data) {
-        console.log(data)
         if (error) {
             return console.log(data);
         }
@@ -96,7 +95,7 @@ function spotifyThis(){
         var spotifyArr = data.tracks.items;
 
         for (i = 0; i < spotifyArr.length; i++) {
-           console.log(spotifyArr[i])
+           //console.log(spotifyArr[i])
             console.log(`\nArtist: ${data.tracks.items[i].album.artists[0].name} \nSong: ${data.tracks.items[i].name}\nAlbum: ${data.tracks.items[i].album.name}\nSpotify link: ${data.tracks.items[i].external_urls.spotify}\n\n - - - - -`)
         };
     });
@@ -104,13 +103,13 @@ function spotifyThis(){
 
 function movieThis() {
      if (!search) {
-       search = "Friday";
+       search = "Mr. Nobody";
      };
     // OMDB api request
     request("http://www.omdbapi.com/?t=" + search + "&apikey=10946191", function (error, response, body) {
         var userMovie = JSON.parse(body);
 
-        // BECAUSE THE ROTTEN TOMATOES RATING WAS NESTED IT WAS NECESSARY TO CAPTURE ITS VALUES IN AN ARRAY TO CREATE A PATH
+        
         var ratingsArr = userMovie.Ratings;
         if (ratingsArr.length > 2) {}
 
