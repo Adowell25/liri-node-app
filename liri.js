@@ -21,10 +21,6 @@ var spotify = new Spotify(keys.spotify);
 var omdb = (keys.omdb);
 var bandsintown = (keys.bandsintown);
 
-//Axios
-var axios = require("axios");
-const { serialize } = require("v8");
-
 //Arguments-the command and data input
 var command = process.argv[2];
 var search = process.argv[3];
@@ -85,11 +81,6 @@ console.log(`\n - - - - -\n`);
 function spotifyThis(){
     //spotify search format
     console.log(`\n - - - - -`);
-
-    // If command is not found, 99 Problems will be passed
-    // if (!command) {
-    //     command = "99 Problems"
-    // };
 
     // search format
     spotify.search({
