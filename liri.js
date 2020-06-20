@@ -22,7 +22,8 @@ var omdb = (keys.omdb);
 var bandsintown = (keys.bandsintown);
 
 //Axios
-var axios = require("axios")
+var axios = require("axios");
+const { serialize } = require("v8");
 
 //Arguments-the command and data input
 var command = process.argv[2];
@@ -32,20 +33,21 @@ var search = process.argv[3];
 function dataCommand(command, search){
 switch (command) {
     case "concert-this":
-      concertThis();
+      concertThis(command);
       break;
 
     case "spotify-this-song":
-      spotifyThis();
+      spotifyThis(command);
       break;
   
     case "movie-this":
-      movieThis();
+      movieThis(command);
       break;
   
     case "do-what-it-says":
-      doThis(search);
+      doThis(command);
       break;
+
     default:
         console.log("Invalid Command");
         break;
@@ -92,25 +94,27 @@ function spotifyThis(){
     // search format
     spotify.search({
         type: 'track',
-        query: command,
+        query: search,
         limit: 1
     }, function (error, data) {
+        console.log(data)
         if (error) {
-            return console.log('Error occurred: ' + error);
+            return console.log(data);
         }
         //data formatted in an array
         var spotifyArr = data.tracks.items;
 
         for (i = 0; i < spotifyArr.length; i++) {
+           console.log(spotifyArr[i])
             console.log(`\nArtist: ${data.tracks.items[i].album.artists[0].name} \nSong: ${data.tracks.items[i].name}\nAlbum: ${data.tracks.items[i].album.name}\nSpotify link: ${data.tracks.items[i].external_urls.spotify}\n\n - - - - -`)
         };
     });
 }
 
 function movieThis() {
-    // if (!userQuery) {
-    //     userQuery = "mr nobody";
-    // };
+     if (!search) {
+       search = "Friday";
+     };
     // OMDB api request
     request("http://www.omdbapi.com/?t=" + search + "&apikey=10946191", function (error, response, body) {
         var userMovie = JSON.parse(body);
