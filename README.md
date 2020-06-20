@@ -21,9 +21,21 @@ How it works
 Using switch case, 4 commands are passed depending on which command is chosen followed by the search case. Each command
 will return the specified data for each concert, song, and movie. The "do-what-it-says" function is a spotify call working the same as "spotify-this-song".
 
-concert-this
+1. concert-this
 
 User inputs the command(concert-this) and the search criteria(Artist) and the Name, Venue, Venue City, and Date/Time returns.
 
 
+2. spotify-this-song
 
+User inputs the command(spotify-this-song) and the search criteria(song) and artist, song, album, and spotify link will be returned
+
+3. movie-this
+
+User inputs the command(movie-this) and the search criteria(movie) and the movie title, cast, release date, imdb and rotten tomatoes rating, country, language and plot will be returned
+
+4. do-what-it-says
+
+User inputs the command(do-what-it-says) and the file system will read the contents of the "random.txt" file. Which in this case holds the spotify command, so the server reads spotify-this-song followed by the search criteria and executes as if you ran the spotify command directly.
+
+and artist, song, album, and spotify link will be returned
